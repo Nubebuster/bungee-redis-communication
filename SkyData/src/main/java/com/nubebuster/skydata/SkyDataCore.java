@@ -131,6 +131,15 @@ public class SkyDataCore {
     }
 
     /**
+     * Add a value(s) to the head, the left side, of a list with the given key.
+     * <p>
+     * Blocking operation. Run asynchronously.
+     */
+    public void lPushValue(String key, String... value) {
+        getJedisFromPool().lpush(key, value);
+    }
+
+    /**
      * Get the value at the head, the left side, of a list with the given key and
      * remove the value from the list.
      * <p>
@@ -141,8 +150,16 @@ public class SkyDataCore {
     }
 
     /**
-     * Get the value at the head, the left side, of a list with the given key and
-     * remove the value from the list.
+     * Get the value at the specified index of a list with the given key.
+     * <p>
+     * Blocking operation. Run asynchronously.
+     */
+    public String lIndexValue(String key, int index) {
+        return getJedisFromPool().lindex(key, index);
+    }
+
+    /**
+     * Get the value and remove the key
      * <p>
      * Blocking operation. Run asynchronously.
      */
