@@ -1,0 +1,4 @@
+name: SkyData
+main: com.nubebuster.skydata.SkyDataBungee
+version: '1.0'
+author: NubeBuster
