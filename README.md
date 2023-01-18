@@ -50,7 +50,7 @@ core.setValue(String key, Object value, int secondsToExpire)
 | lPopValue | String key | `String`    | Get and remove value from head of list** |
 | rPopValue | String key | `String`    | Get and remove value from tail of list** |
 | getDelValue | String key | `String`    | Get and remove value |
-| lIndexValue | String key, int index | `String`    | Get value of list at index |
+| lIndexValue | String key, int index | `String`    | Get value from list at index |
 
 *If list does not exist, one is created
 
