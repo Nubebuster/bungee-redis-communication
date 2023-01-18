@@ -1,8 +1,9 @@
 # bungee-redis-communication
-Plugin for Spigot server communication on a Bungeecord network
+Plugin for server communication on a Bungeecord/Spigot network using Redis and MySQL.
+This plugin can be used to make servers in a Bungeecord network talk to each other and to the Bungeecord instance without using Plugin Messaging. This means the servers can communicate without the requirement of a player to send the plugin messages through. Additionally, this plugin provides simple MySQL database API.
 ## API Reference
 
-#### Get the core (Spigot)
+#### Get the core
 
 ```java
 SkyDataCore core = SkyDataSpigot.getCore() // Spigot
@@ -10,13 +11,15 @@ SkyDataCore core = SkyDataBungee.getCore() // Bungeecord
 ```
 ### Redis
 
-#### Publish a string to all servers on network, including Bungeecord server
+#### Publish a payload (String) from any server to all servers on network, including Bungeecord proxy
 
 ```java
 core.publish(String message)
 ```
 
 #### Listen for messages
+You can add any information you want in the messages. You could for example have game servers advertise available game slots to the lobby or proxy. Or you could apply votifier to all back-end servers by installing Votifier on the bungeecord server and broadcasting a message from the bungeecord to all back-end servers.
+
 
 ```java
 // Spigot
@@ -54,4 +57,26 @@ core.setValue(String key, Object value, int secondsToExpire)
 **Will leave empty list if no values are present anymore
 
 ### MYSQL
-TODO
+The plugin comes with simple MySQL support. MySQL can be disabled in the config.yml
+#### Update
+```java
+PreparedStatement statement = core.getMYSQLDatabase().createStatement("SET score=? FROM ? WHERE uuid=?;");
+statement.setInt(1, 100);
+statement.setString(2, database);
+statement.setString(3, uuid.toString());
+boolean result = statement.execute();
+```
+
+#### Fetch
+```java
+PreparedStatement statement = core.getMYSQLDatabase().createStatement("SELECT score FROM ? WHERE uuid=?;");
+statement.setString(1, database);
+statement.setString(2, uuid.toString());
+ResultSet result = statement.executeQuery();
+if (result.next()) {
+    int score = result.getInt("score");
+} else {
+    //not found
+}
+```
+Optionally you can execute SQL strings using `fetch(String sqlQuery)` and `executeUpdate(String sqlQuery)` but this is not recommended.
