@@ -23,9 +23,13 @@ public class SkyDataSpigot extends JavaPlugin {
 
         RedisMessageStrategy redisMessageStrategy = (message) -> getServer().getPluginManager().callEvent(new RedisMessageEventSpigot(message));
 
-        SkyDataCore.initialize(config.getString("redis.host"), config.getInt("redis.port"),
-                config.getString("mysql.host"), config.getInt("mysql.port"), config.getString("mysql.db"),
-                config.getString("mysql.user"), config.getString("mysql.password"), redisMessageStrategy);
+        if (config.getBoolean("mysql.enable")) {
+            SkyDataCore.initialize(config.getString("redis.host"), config.getInt("redis.port"),
+                    config.getString("mysql.host"), config.getInt("mysql.port"), config.getString("mysql.db"),
+                    config.getString("mysql.user"), config.getString("mysql.password"), redisMessageStrategy);
+        } else {
+            SkyDataCore.initialize(config.getString("redis.host"), config.getInt("redis.port"), redisMessageStrategy);
+        }
 
         new BukkitRunnable() {
             public void run() {

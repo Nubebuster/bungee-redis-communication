@@ -27,6 +27,11 @@ public class SkyDataCore {
 
     private SkyDataCore(String redisHost, int redisPort, String mysqlHost, int mysqlPort,
                         String mysqlDatabase, String mysqlUser, String mysqlPassword, RedisMessageStrategy redisMessageStrategy) {
+        this(redisHost, redisPort, redisMessageStrategy);
+        database = new MYSQLDatabase(mysqlHost, mysqlPort, mysqlDatabase, mysqlUser, mysqlPassword);
+    }
+
+    private SkyDataCore(String redisHost, int redisPort, RedisMessageStrategy redisMessageStrategy) {
         this.redisHost = redisHost;
         this.redisPort = redisPort;
         poolConfig = new JedisPoolConfig();
@@ -34,16 +39,18 @@ public class SkyDataCore {
         poolConfig.setMaxIdle(64);
         createPool();
 
-        if (mysqlHost != null)
-            database = new MYSQLDatabase(mysqlHost, mysqlPort, mysqlDatabase, mysqlUser, mysqlPassword);
-
         this.redisMessageStrategy = redisMessageStrategy;
     }
+
 
     protected static void initialize(String redisHost, int redisPort, String mysqlHost,
                                      int mysqlPort, String mysqlDatabase, String mysqlUser, String mysqlPassword, RedisMessageStrategy redisMessageStrategy) {
         inst = new SkyDataCore(redisHost, redisPort, mysqlHost, mysqlPort, mysqlDatabase, mysqlUser,
                 mysqlPassword, redisMessageStrategy);
+    }
+
+    protected static void initialize(String redisHost, int redisPort, RedisMessageStrategy redisMessageStrategy) {
+        inst = new SkyDataCore(redisHost, redisPort, redisMessageStrategy);
     }
 
     protected static SkyDataCore getInstance() {

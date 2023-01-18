@@ -1,9 +1,6 @@
 package com.nubebuster.skydata;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Optional;
 
 public class MYSQLDatabase {
@@ -84,5 +81,13 @@ public class MYSQLDatabase {
      */
     public boolean executeUpdate(String sqlQuery) throws SQLException {
         return getConnection().prepareStatement(sqlQuery).execute();
+    }
+
+    /**
+     * @param sqlQuery the update query to execute
+     * @return whether execution was successful
+     */
+    public PreparedStatement createStatement(String sqlQuery) throws SQLException {
+        return getConnection().prepareStatement(sqlQuery);
     }
 }
