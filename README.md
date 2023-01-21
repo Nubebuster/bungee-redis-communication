@@ -1,6 +1,10 @@
 # bungee-redis-communication
 Plugin for server communication on a Bungeecord/Spigot network using Redis and MySQL.
 This plugin can be used to make servers in a Bungeecord network talk to each other and to the Bungeecord instance without using Plugin Messaging. This means the servers can communicate without the requirement of a player to send the plugin messages through. Additionally, this plugin provides simple MySQL database API.
+
+## Binaries
+https://www.spigotmc.org/resources/skydata.107455/
+
 ## API Reference
 
 #### Get the core
